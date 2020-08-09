@@ -1,0 +1,9 @@
+pcmntel8x0 {
+          type hw
+          card 0
+       }
+
+       ctl.intel8x0 {
+          type hw
+          card 0
+       }
