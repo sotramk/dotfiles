@@ -1,18 +1,14 @@
 if [ -f /etc/bash_completion ]; then
 	    . /etc/bash_completion
 fi
-
 if [[ $TERM == xterm-termite ]]; then
                 . /etc/profile.d/vte.sh
                 __vte_prompt_command
               fi
-
 xhost +local:root > /dev/null 2>&1
-
 #complete -cf sudo
-
 umask 0002
-
+set -o vi
 shopt -s cdspell
 shopt -s checkwinsize
 shopt -s cmdhist
@@ -21,24 +17,19 @@ shopt -s expand_aliases
 shopt -s extglob
 shopt -s histappend
 shopt -s hostcomplete
-
 BOWSER=/usr/bin/firefox
-
 export HISTSIZE=10000
 #export HISTFILESIZE=${HISTSIZE}
-export HISTCONTROL=ignoredups
 export HISTCONTROL=ignoreboth
 export JAVA_FONTS=/usr/share/fonts/TTF
 export TERMINAL=/usr/bin/terminator
 export EDITOR=/usr/bin/vim
 export PATH=/home/sot/.local/bin:":$PATH"
-
 ####################### ALIAS'S ####################################################################
-
 alias aliases='cd ~ && cat .bashrc | grep alias'
 alias as=".local/bin/allservers"
 #alias bakup="sudo rsync -azvhP --exclude-from '.homeexclude.txt' /home/sot /run/media/sot/DATA/backup"
-alias bakup="sudo rsync -avz --exclude-from '.homeexclude.txt' /home/sot /run/media/sot/DATA"
+alias bakup="sudo rsync -avzS --delete /run/media/sot/DATA/ /run/media/sot/3cfaf2de-510b-4224-bcc5-0810bd4eca69/"
 alias bm='bashmount'
 alias blame='sudo systemd-analyze blame'
 alias brokelnk='find . -type l -! -exec test -e {} \; -print'
@@ -68,31 +59,27 @@ alias netinfo='hwinfo --netcard --wlan --bluetooth | grep -Ei "model\:|driver\:|
 #alias pacnew='locate -e --regex "\.pac(new|orig|save)$"'
 #alias pacnew='grep --extended-regexp "pac(new|save)" /var/log/pacman.log'
 alias pacnew='updatedb && locate --existing --regex "\.pac(new|save)$'
+alias pcr='sudo protonvpn c -r'
 alias pkglist='comm -23 <(pacman -Qeq|sort) <(pacman -Qmq|sort) > pkglist.txt'
 alias scanhome='clamscan --recursive --infected /home'
 alias scandisk="clamscan --recursive --infected --exclude-dir='^/sys|^/dev' /"
 alias share='python -m http.server'
 alias src='source ~/.bashrc'
 alias update='sudo pacman -Syyu'
+alias vw='vim vimwiki/index.wiki'
 alias forecast='curl -s wttr.in/44870'
 alias wthr='curl -s wttr.in/44870'
 alias wx='inxi -wxxx'
-
 ######################### MEDIA ##############################################################
-
 alias ma='mpv --ytdl-format bestaudio'
 alias v='mpv'
 alias yta='youtube-dl --extract-audio '
 alias yt='youtube-dl'
-
 ######################### INVEST ############################################################
-
 alias br='buyRange.py'
 alias lc='/usr/bin/loss_calc.py'
 alias pd='/usr/bin/priceDiff.py'
-
 ###############################################################################################
-
 # ex - archive extractor
 # usage: ex <file>
 ex ()
@@ -116,7 +103,6 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
-
 screenfetch
 # prompt -- change color when su
 PS1='[\u@\h \W]\$ '
@@ -126,7 +112,6 @@ if [[ $EUID = 0 ]]; then
 else
     PS1='\e[0;32m''[\u@\h \W]\$ '
 fi
-
 #colored man pages
 man() {
     env LESS_TERMCAP_mb=$'\E[01;31m' \
@@ -138,10 +123,7 @@ man() {
     LESS_TERMCAP_us=$'\E[04;38;5;146m' \
     man "$@"
 }
-
-
 if [[ $TERMINIX_ID ]]; then
         source /etc/profile.d/vte.sh
 fi
 source /usr/share/nvm/init-nvm.sh
-alias config='/usr/bin/git --git-dir=/home/sot/dotfiles/ --work-tree=/home/sot'
