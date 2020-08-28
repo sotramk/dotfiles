@@ -35,6 +35,7 @@ alias blame='sudo systemd-analyze blame'
 alias brokelnk='find . -type l -! -exec test -e {} \; -print'
 alias changedtoday='find ~ -type f -mtime 0'
 alias chromium='chromium -password-store=basic'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias cp="cp -i"                          # confirm before overwriting something
 alias cu="checkupdates"
 alias dmes="sudo sysctl kernel.dmesg_restrict=0"
