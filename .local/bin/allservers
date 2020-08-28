@@ -1,0 +1,182 @@
+#!/bin/bash
+#
+# The allservers script was
+# written by handy, with a little help from others, it is
+# released under a free for all public domain license, do what
+# you will with it.
+###########################################################
+err() {
+   ALL_OFF="\e[1;0m"
+   BOLD="\e[1;1m"
+   RED="${BOLD}\e[1;31m"
+    local mesg=$1; shift
+    printf "${RED}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
+}
+msg() {
+   ALL_OFF="\e[1;0m"
+   BOLD="\e[1;1m"
+   GREEN="${BOLD}\e[1;32m"
+    local mesg=$1; shift
+    printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
+}
+# The menu:
+clear # Clear the screen.
+echo
+echo -e "\e[1;32m                             allservers"
+echo
+echo -e " \e[0;33m   Enter Your chosen Option's number \e[0;32m[\e[1;37m?\e[0;32m] \e[4;37mOR\e[0m\e[0;32m hit \e[0;31mReturn\e[0;32m to \e[0;31mexit\e[0;32m. "
+echo
+echo
+echo -e "    [\e[1;37m1\e[0;32m] Create & update custom mirrorlist: \033[0mpacman-mirrors -ic"
+echo -e "       \e[0;33m &\e[0;32m then sync/refresh package lists: \033[0mpamac update -a --force-refresh"
+echo
+echo -e "   \e[0;32m [\e[1;37m2\e[0;32m] Select fresh mirror plus Upgrade the System: \033[0mpacman-mirrors f5 and pamac update -a --force-refresh"
+echo -e "       \e[0;33m &\e[0;32m then run paccache: \033[0mpaccache "
+echo
+echo -e "   \e[0;32m [\e[1;37m3\e[0;32m] Upgrade the System & AUR with YAY: \033[0myay -Syu"
+echo -e "       \e[0;33m &\e[0;32m then run paccache: \033[0mpaccache "
+echo
+echo -e "   \e[0;32m [\e[1;37m4\e[0;32m] Upgrade the System only: \033[0mpamac update -a"
+echo -e "       \e[0;33m &\e[0;32m then run paccache: \033[0mpaccache "
+echo
+echo -e "   \e[0;32m [\e[1;37m5\e[0;32m] Refresh Keys and Upgrade the System & AUR: \033[0mpamac update -a"
+echo -e "       \e[0;33m &\e[0;32m then run paccache: \033[0mpaccache "
+echo
+echo -e "   \e[0;32m [\e[1;37m6\e[0;32m] Delete \e[0;33mdb.lck\e[0;32m after interupted upgrade: \033[0mrm /var/lib/pacman/db.lck "
+echo -e "       \e[0;32m this should remedy the unable to lock database error. "
+echo
+echo -e "\033[1m  Enter the Number of Your Choice: \033[0m"
+echo
+read option
+case "$option" in
+# Note variable is quoted.
+ "1")
+ echo
+ msg "Create Mirror List and Update System:"
+ echo
+ sudo pacman-mirrors -ic United_States Germany United_Kingdom Denmark France
+ echo
+ msg "Your mirrors have been ranked &"
+ msg "the mirrorlist has now been refreshed."
+ echo
+ msg "Refreshing your pacman database:"
+ pamac update -a --force-refresh
+ echo
+ msg "Your mirrors & package database are now synchronised."
+ echo
+ ;;
+# Note double semicolon to terminate each option.
+ "2")
+ echo
+ msg "Select Mirror and update system:"
+ echo
+ sudo pacman-mirrors -f 5
+ echo
+ msg "Your mirrors have been ranked &"
+ msg "the mirrorlist has now been refreshed."
+ echo
+ msg "Refreshing your pacman database:"
+ echo
+ pamac update -a --force-refresh
+ msg "Your mirrors & package database are now synchronised."
+ echo
+ echo
+ msg "System upgrade complete."
+ echo
+ msg "paccache will now remove all but the 2 most "
+ msg "recent versions of the installation packages in "
+ msg "/var/cache/pacman/pkg directory:"
+ echo
+ sudo paccache -rv -k 2
+ echo
+ msg "paccache has done its job. "
+ echo
+ sudo pacdiff
+ ;;
+# Note double semicolon to terminate each option.
+ "3")
+ echo
+ msg "Processing mirrors:"
+ echo
+ sudo pacman-mirrors -f 5
+ echo
+ msg "Your mirrors have been ranked &"
+ msg "the mirrorlist has now been refreshed."
+ echo
+ msg "Refreshing your pacman database and upgrading system and AUR:"
+ yay -Syyu
+ echo
+ msg "Your mirrors & package database are now synchronised."
+ echo
+ echo
+ msg "System including AUR packages are up to date."
+ echo
+ msg "paccache will now remove all but the 2 most "
+ msg "recent versions of the installation packages in "
+ msg "/var/cache/pacman/pkg directory:"
+ echo
+ sudo paccache -rv -k 2
+ echo
+ msg "paccache has done its job. "
+ echo
+ sudo pacdiff
+ ;;
+# Note double semicolon to terminate each option.
+ "4")
+ echo
+ msg "Upgrading System:"
+ echo
+ pamac update -a
+ echo
+ msg "System update complete."
+ echo
+ msg "paccache will now remove all but the 2 most "
+ msg "recent versions of the installation packages in "
+ msg "/var/cache/pacman/pkg directory:"
+ echo
+ sudo paccache -rv -k 2
+ echo
+ msg "paccache has done its job. "
+ echo
+ sudo pacdiff
+ ;;
+# Note double semicolon to terminate each option.
+ "5")
+ echo
+ msg "Update Keys:"
+ sudo pacman -Sy gnupg archlinux-keyring manjaro-keyring && sudo pacman-key --init && sudo pacman-key --populate archlinux manjaro && sudo pacman-key --refresh-keys
+ echo
+ msg "Upgrading System & AUR: "
+ echo
+ pamac update -a
+ echo
+ msg "System including AUR packages are up to date. "
+ echo
+ msg "paccache will now remove all but the 2 most "
+ msg "recent versions of the installation packages in "
+ msg "/var/cache/pacman/pkg directory:"
+ echo
+ sudo paccache -rv -k 2
+ echo
+ msg "paccache has done its job. "
+ echo
+ sudo pacdiff
+ ;;
+# Note double semicolon to terminate each option.
+"6")
+ echo
+ msg "About to delete /var/lib/pacman/db.lck: "
+ echo
+ sudo rm /var/lib/pacman/db.lck
+ echo
+ msg "File db.lck removed, re-attempting yourupdate. "
+ echo
+ pamac update -a
+ echo
+ sudo paccache -rv -k-2
+ echo
+ sudo pacdiff
+ ;;
+# Note double semicolon to terminate each option.
+esac
+exit 0
