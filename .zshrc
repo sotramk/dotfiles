@@ -69,7 +69,8 @@ alias dd="sudo dd if=manjaro.iso of=/dev/sdb bs=1M oflag=sync status=progress"
 alias dmes="sudo sysctl kernel.dmesg_restrict=0"
 alias dskinfo='sudo lsblk -o name,label,size,fstype,model'
 alias df='df -h'                          # human-readable sizes
-alias errors="journalctl -b -p err|less"
+#alias errors="journalctl -b -p err|less"
+alias errors="journalctl -b -p3 --no-hostname"
 alias fail='journalctl -p 3 -xb'
 alias fixit='sudo rm -f /var/lib/pacman/db.lck && sudo pacman-mirrors -g && sudo pacman -Syyuu  &&'
 alias free='free -m'                      # show sizes in MB
