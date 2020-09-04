@@ -62,7 +62,7 @@ alias br='.local/bin/buyRange.py'
 alias brokelnk='find . -type l -! -exec test -e {} \; -print'
 alias changedtoday='find ~ -type f -mtime 0'
 alias chromium='chromium -password-store=basic'
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'     # for bare git repository
 alias cp="cp -i"                          # confirm before overwriting something
 alias cu="checkupdates"
 alias dd="sudo dd if=manjaro.iso of=/dev/sdb bs=1M oflag=sync status=progress"
