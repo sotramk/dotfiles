@@ -60,6 +60,7 @@ alias bakup='sudo rsync -avP --delete --exclude "VirtualBox VMs" /run/media/sot/
 alias blame='sudo systemd-analyze blame'
 alias br='.local/bin/buyRange.py'
 alias brokelnk='find . -type l -! -exec test -e {} \; -print'
+alias btop='bpytop.py'
 alias changedtoday='find ~ -type f -mtime 0'
 alias chromium='chromium -password-store=basic'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'     # for bare git repository
@@ -84,7 +85,7 @@ alias la='ls -aB --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --colo
 alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias llt='ls -alt --group-directories-first --color=auto -F'
 alias lls='ls -als --group-directories-first --color=auto -F'
-alias ls='ls -lah --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
+#alias ls='ls -lah --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=aut#o -F'
 alias ma='mpv --ytdl-format bestaudio'
 alias mkx='chmod u+x *'
 alias mp='mousepad'
