@@ -85,7 +85,7 @@ alias la='ls -aB --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --colo
 alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias llt='ls -alt --group-directories-first --color=auto -F'
 alias lls='ls -als --group-directories-first --color=auto -F'
-#alias ls='ls -lah --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=aut#o -F'
+alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias ma='mpv --ytdl-format bestaudio'
 alias mkx='chmod u+x *'
 alias mp='mousepad'
