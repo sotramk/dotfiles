@@ -125,6 +125,7 @@ alias trest='trash-restore'
 alias update='sudo pacman -Syyu'
 alias wthr='curl -s wttr.in/44870'
 alias wx='inxi -wxxx'
+alias zoho='/home/sot/Applications/squashfs-root/./AppRun &'
 alias forecast='curl -s wttr.in/44870'
 alias gitu='git add . && git commit && git push'
 # Theming section

@@ -9,16 +9,30 @@ runtime! archlinux.vim
 set nocompatible
 filetype plugin on
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vimwiki/vimwiki'
-call vundle#end()
+" set rtp+=~/.vim/bundle/Vundle.vim
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+call plug#begin('~/.vim/plugged')
+" Plug 'VundleVim/Vundle.vim'
+Plug 'vimwiki/vimwiki'
+Plug 'junegunn/seoul256.vim'
+Plug 'tpope/vim-surround'
+Plug 'vim-python/python-syntax'
+Plug 'itchyny/lightline.vim'
+
+call plug#end()
 
 " Use system clipboard
 set clipboard=unnamed
 
-
+" lightline settings
+set laststatus=2
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ }
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
 
@@ -42,6 +56,9 @@ set backspace=indent,eol,start
 " I like to have it here becuase it is easier to reach than the default and
 " it is next to ``m`` and ``n`` which I use for navigating between tabs.
 let mapleader = ","
+
+" enable all syntax highlighting
+let g:python_highlight_all = 1
 
 " map sort function to a key
 vnoremap <Leader>s :sort<CR>
@@ -80,7 +97,8 @@ set smartcase
 if &t_Co > 2 || has("gui_running")
   syntax on
   "colorscheme jellybeans
-  colorscheme zenburn
+  "colorscheme zenburn
+  colorscheme seoul256
   set hlsearch
 endif
 
